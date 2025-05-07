@@ -1,0 +1,140 @@
+:root {
+  --primary-cherry: #B71C1C;
+  --dark-cherry: #7F0000;
+  --light-cherry: #FFCDD2;
+  --accent-cherry: #D32F2F;
+  --cherry-bg: #FFF5F5;
+  --cherry-form-bg: #FFF9F9;
+}
+
+.container {
+  padding: 30px;
+  background-color: var(--cherry-bg);
+  min-height: 100vh;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-header h1 {
+  color: var(--primary-cherry);
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-container {
+  background-color: var(--cherry-form-bg);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: auto;
+  box-shadow: 0 4px 15px rgba(183, 28, 28, 0.15);
+  border-left: 5px solid var(--primary-cherry);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--dark-cherry);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-control,
+.form-select {
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-cherry);
+  box-shadow: 0 0 0 0.2rem rgba(183, 28, 28, 0.25);
+}
+
+.btn-cherry {
+  background-color: var(--primary-cherry);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.btn-cherry:hover {
+  background-color: var(--dark-cherry);
+}
+
+.btn-cherry:disabled {
+  background-color: var(--primary-cherry);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--primary-cherry);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  color: var(--dark-cherry);
+  text-decoration: underline;
+}
+
+.form-file {
+  padding: 8px;
+}
+
+.step-item {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.step-item textarea {
+  flex: 1;
+}
+
+.step-item button {
+  padding: 8px 15px;
+  margin-top: 0;
+}
+
+.alert {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 5px;
+}
+
+.alert-danger {
+  background-color: #fff3f3;
+  border-color: #ffcdd2;
+  color: #d32f2f;
+}
+
+.btn-outline-danger {
+  color: var(--primary-cherry);
+  border-color: var(--primary-cherry);
+  background-color: transparent;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.btn-outline-danger:hover {
+  color: white;
+  background-color: var(--primary-cherry);
+  border-color: var(--primary-cherry);
+} 

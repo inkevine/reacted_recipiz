@@ -1,0 +1,44 @@
+.content-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.content-card h2 {
+  color: var(--primary-cherry);
+  margin-bottom: 15px;
+}
+
+.feature-card {
+  background-color: var(--light-cherry);
+  border-radius: 8px;
+  padding: 20px;
+  height: 100%;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h3 {
+  color: var(--primary-cherry);
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  background-color: var(--primary-cherry);
+  border-color: var(--primary-cherry);
+}
+
+.btn-primary:hover {
+  background-color: var(--dark-cherry);
+  border-color: var(--dark-cherry);
+} 
