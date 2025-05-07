@@ -47,10 +47,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const register = async (userData: any) => {
-    const response = await userApi.register(userData);
-    const { token, user } = response.data;
-    localStorage.setItem('token', token);
-    setUser(user);
+    try {
+      const response = await userApi.register(userData);
+      if (response.data) {
+        const { token, user } = response.data;
+        localStorage.setItem('token', token);
+        setUser(user);
+      } else {
+        throw new Error('Registration failed: No data received');
+      }
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      throw new Error(error.response?.data || 'Registration failed');
+    }
   };
 
   const logout = () => {

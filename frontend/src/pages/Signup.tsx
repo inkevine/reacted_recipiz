@@ -41,8 +41,9 @@ const Signup: React.FC = () => {
         password: formData.password
       });
       navigate('/');
-    } catch (err) {
-      setError('Failed to create an account');
+    } catch (err: any) {
+      console.error('Registration error:', err);
+      setError(err.message || 'Failed to create an account. Please try again.');
     } finally {
       setLoading(false);
     }
