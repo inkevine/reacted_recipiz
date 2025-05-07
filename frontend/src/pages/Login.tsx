@@ -1,25 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
 import './Login.css';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setError('');
       setLoading(true);
-      await login(email, password);
+      await login(formData.email, formData.password);
       navigate('/');
-    } catch (err) {
-      setError('Failed to sign in. Please check your credentials.');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError(err.message || 'Failed to sign in. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -32,29 +44,34 @@ const Login: React.FC = () => {
           <div className="login-card">
             <h2 className="text-center mb-4">Login to Ingrido</h2>
             {error && <div className="alert alert-danger">{error}</div>}
+            
             <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
+              <div className="inputbox">
+                <FaEnvelope className="input-icon" />
                 <input
-                  type="email"
-                  className="form-control"
+                  type="text"
                   id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
+                <label htmlFor="email">Email or Username</label>
               </div>
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
+
+              <div className="inputbox">
+                <FaLock className="input-icon" />
                 <input
                   type="password"
-                  className="form-control"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   required
                 />
+                <label htmlFor="password">Password</label>
               </div>
+
               <button
                 type="submit"
                 className="btn btn-primary w-100"
@@ -63,6 +80,7 @@ const Login: React.FC = () => {
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
             </form>
+
             <div className="text-center mt-3">
               <p>
                 Don't have an account?{' '}

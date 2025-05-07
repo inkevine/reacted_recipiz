@@ -40,10 +40,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await userApi.login({ email, password });
-    const { token, user } = response.data;
-    localStorage.setItem('token', token);
-    setUser(user);
+    try {
+      const response = await userApi.login({ email, password });
+      if (response.data) {
+        const { token, user } = response.data;
+        localStorage.setItem('token', token);
+        setUser(user);
+      } else {
+        throw new Error('Login failed: No data received');
+      }
+    } catch (error: any) {
+      console.error('Login error:', error);
+      throw new Error(error.response?.data || 'Login failed');
+    }
   };
 
   const register = async (userData: any) => {
