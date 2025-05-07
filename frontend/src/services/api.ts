@@ -43,6 +43,10 @@ export const recipeApi = {
 export const categoryApi = {
   getAll: () => api.get('/recipes'), // This endpoint returns categories along with recipes
   getById: (id: string) => api.get(`/recipes/category/${id}`),
+  getAllCategories: () => api.get('/categories'),
+  createCategory: (data: { name: string; description: string }) => 
+    api.post('/categories', data),
+  deleteCategory: (id: number) => api.delete(`/categories/${id}`),
 };
 
 // User endpoints
@@ -52,6 +56,7 @@ export const userApi = {
   register: (userData: any) => api.post('/req/signup', userData),
   getProfile: () => api.get('/users/api/profile'),
   updateProfile: (data: any) => api.post('/users/api/profile', data),
+  removeFavorite: (recipeId: number) => api.delete(`/users/favorites/${recipeId}`),
 };
 
 // Rating and Review endpoints

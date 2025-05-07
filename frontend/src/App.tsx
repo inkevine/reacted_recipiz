@@ -1,54 +1,48 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Home from './pages/Home';
 import Profile from './pages/Profile';
 import AddRecipe from './pages/AddRecipe';
+import ViewRecipe from './pages/ViewRecipe';
+import MyRecipes from './pages/MyRecipes';
+import Favorites from './pages/Favorites';
+import Categories from './pages/Categories';
+import Assistant from './pages/Assistant';
 import './App.css';
-// import ViewRecipe from './pages/ViewRecipe';
-// import MyRecipes from './pages/MyRecipes';
-// import Favorites from './pages/Favorites';
-// import Categories from './pages/Categories';
-// import Assistant from './pages/Assistant';
 
-// Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
-  return <>{children}</>;
+  const token = localStorage.getItem('token');
+  return token ? <>{children}</> : <Navigate to="/login" />;
 };
 
-// Auth Layout component (for login/signup pages)
 const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <div className="auth-layout">{children}</div>;
+  return (
+    <div className="auth-layout">
+      {children}
+    </div>
+  );
 };
 
-// Main Layout component (for authenticated pages)
-const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="app">
+    <div className="app-layout">
       <Navbar />
-      <Sidebar />
-      <main id="main">{children}</main>
+      <div className="main-content">
+        <Sidebar />
+        <div className="content">
+          {children}
+        </div>
+      </div>
     </div>
   );
 };
 
 const AppRoutes: React.FC = () => {
-  const { user } = useAuth();
-
   return (
     <Routes>
       {/* Auth Routes */}
@@ -66,61 +60,71 @@ const AppRoutes: React.FC = () => {
       {/* Protected Routes */}
       <Route path="/" element={
         <ProtectedRoute>
-          <MainLayout>
+          <AppLayout>
             <Home />
-          </MainLayout>
+          </AppLayout>
         </ProtectedRoute>
       } />
       <Route path="/profile" element={
         <ProtectedRoute>
-          <MainLayout>
+          <AppLayout>
             <Profile />
-          </MainLayout>
+          </AppLayout>
         </ProtectedRoute>
       } />
-      <Route path="/add-recipe" element={
+      <Route path="/recipes/add" element={
         <ProtectedRoute>
-          <MainLayout>
+          <AppLayout>
             <AddRecipe />
-          </MainLayout>
+          </AppLayout>
         </ProtectedRoute>
       } />
-      {/* <Route path="/recipe/:id" element={
+      <Route path="/recipe/:id" element={
         <ProtectedRoute>
-          <ViewRecipe />
+          <AppLayout>
+            <ViewRecipe />
+          </AppLayout>
         </ProtectedRoute>
       } />
       <Route path="/my-recipes" element={
         <ProtectedRoute>
-          <MyRecipes />
+          <AppLayout>
+            <MyRecipes />
+          </AppLayout>
         </ProtectedRoute>
       } />
       <Route path="/favorites" element={
         <ProtectedRoute>
-          <Favorites />
+          <AppLayout>
+            <Favorites />
+          </AppLayout>
         </ProtectedRoute>
       } />
       <Route path="/categories" element={
         <ProtectedRoute>
-          <Categories />
+          <AppLayout>
+            <Categories />
+          </AppLayout>
         </ProtectedRoute>
       } />
       <Route path="/assistant" element={
         <ProtectedRoute>
-          <Assistant />
+          <AppLayout>
+            <Assistant />
+          </AppLayout>
         </ProtectedRoute>
-      } /> */}
+      } />
     </Routes>
   );
 };
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <AuthProvider>
+    <AuthProvider>
+      <Router>
         <AppRoutes />
-      </AuthProvider>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 };
 
